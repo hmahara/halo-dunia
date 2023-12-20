@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Google Charts With Thymeleaf</title>
+    <title>Halo Dunia</title>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -21,20 +21,20 @@
 
             // Create the data table.
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Topping');
-            data.addColumn('number', 'Slices');
+            data.addColumn('string', 'Exercise');
+            data.addColumn('number', 'Types');
             data.addRows([
-                ['Mushrooms', 3],
-                ['Onions', 1],
-                ['Olives', 1],
-                ['Zucchini', 1],
-                ['Pepperoni', 2]
+                ['Squat', 3],
+                ['Shoulder Press', 1],
+                ['Deadlift', 2],
+                ['Badminton', 4],
+                ['Plank', 2]
             ]);
 
             // Set chart options
-            var options = {'title':'How Much Pizza I Ate Last Night',
-                'width':400,
-                'height':300};
+            var options = {'title':'Structure of exercise',
+                'width':700,
+                'height':600};
 
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -43,7 +43,8 @@
     </script>
 </head>
 <body>
-<h1>Google Charts With Thymeleaf</h1>
+<h1>Halo Dunia!  Hello World!  Halo Wereld!</h1>
+
 <div id="chart_div"></div> 
 </body>
 </html>
