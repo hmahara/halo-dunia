@@ -14,33 +14,11 @@
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     
-    <script src="/stomp.js"></script> 
-    <!--  
-    <script src="/app.js"></script>
-    -->  
+     <script src="/stomp.js"></script> 
+    <script src="/app.js"></script>  
     <script type="text/javascript">
-    let socket = new WebSocket("ws://127.0.0.1:2016/event-websocket");
-
-    socket.onopen = function(e) {
-      
-      socket.send("web application started");
-    };
-
-    socket.onmessage = function(event) {
-    	document.getElementById("from_server").innerHTML = event.data;
-      	alert(`[message] Data received from server: ${event.data}`);
-    };
-
-    socket.onclose = function(event) {
-      if (event.wasClean) {
-        //alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-      } else {
-        // e.g. server process killed or network down
-        // event.code is usually 1006 in this case
-        alert('[close] Connection died');
-      }
-    };
-
+    var url = "ws://localhost:2016/event-websocket";
+    var client = Stomp.client(url);
 
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
@@ -77,12 +55,11 @@
     </script>
 </head>
 <body>
-
 <h1>Halo Dunia!  Hello World!  Halo Wereld!</h1>
 
 <div id="chart_div"></div> 
 
-<div id="from_server"></div>
+<div id="greetings"></div>
 </body>
 </html>
 
