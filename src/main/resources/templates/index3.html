@@ -2,13 +2,44 @@
 <html>
 <head>
     <title>Hello WebSocket</title>
-    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/main.css" rel="stylesheet">
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="/app2.js"></script>
-    <script type="text/javascript" src="/stompobject.js"></script>
+    
+    <script src="/stomp.js"></script> 
+   	<script>
+   		let socket =  new WebSocket(name);
+	    function showGreeting() {
+	    	let name = document.getElementById('server').value;
+	        // Create the data table.
+	    	//document.getElementById("greetings").innerHTML = name;
+	    	socket = new WebSocket(name);
+	    	
+	    }
+	    
+	    socket.onopen = function(e) {
+	        alert("websocket open");
+	        socket.send("web application started");
+	      };
+	    
+	    socket.onmessage = function(event) {
+	    	document.getElementById("greetings").innerHTML = event.data;
+	      	
+	    };
+	    
+	    socket.onclose = function(event) {
+	        if (event.wasClean) {
+	          //alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+	        } else {
+	          // e.g. server process killed or network down
+	          // event.code is usually 1006 in this case
+	          alert('[close] Connection died');
+	        }
+	      };
+    
+    
+    </script>
+    
+    
 </head>
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
@@ -21,10 +52,11 @@
   <br>
     <div class="row">
         <div class="col-md-6">
-            <form class="form-inline">
+            <form class="form-inline" name="myform">
                 <div class="form-group">
                     <label for="connect">WebSocket connection:</label>
-                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                    <input type="text" name="server" id="server" value="ws://127.0.0.1:2016/event-websocket"></input>
+                    <button id="connect" class="btn btn-default" onclick="showGreeting(); return false;">Connect</button>
                     <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
                     </button>
                 </div>

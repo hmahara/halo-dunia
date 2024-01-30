@@ -14,52 +14,57 @@
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     
-     <script src="/stomp.js"></script> 
-    <script src="/app.js"></script>  
+    <script src="/stomp.js"></script> 
+    <!--  
+    <script src="/app.js"></script>
+    -->  
     <script type="text/javascript">
-    var url = "ws://localhost:2016/event-websocket";
-    var client = Stomp.client(url);
+    let socket = new WebSocket("ws://127.0.0.1:2016/event-websocket");
+    
+	function reconnect() {
+		let name = document.getElementById('server').value;
 
-        // Load the Visualization API and the corechart package.
-        google.charts.load('current', {'packages':['corechart']});
+    	socket = new WebSocket(name);
+	}
+    socket.onopen = function(e) {
+      
+      socket.send("web application started");
+    };
 
-        // Set a callback to run when the Google Visualization API is loaded.
-        google.charts.setOnLoadCallback(drawChart);
+    socket.onmessage = function(event) {
+    	document.getElementById("from_server").innerHTML = event.data;
+      	//alert(`[message] Data received from server: ${event.data}`);
+    };
 
-        // Callback that creates and populates a data table,
-        // instantiates the pie chart, passes in the data and
-        // draws it.
-        function drawChart() {
+    socket.onclose = function(event) {
+      if (event.wasClean) {
+        //alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+      } else {
+        // e.g. server process killed or network down
+        // event.code is usually 1006 in this case
+        //alert('[close] Connection died');
+      }
+    };
 
-            // Create the data table.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Exercise');
-            data.addColumn('number', 'Types');
-            data.addRows([
-                ['Squat', 3],
-                ['Shoulder Press', 1],
-                ['Deadlift', 2],
-                ['Badminton', 4],
-                ['Plank', 2]
-            ]);
 
-            // Set chart options
-            var options = {'title':'My Exercise Routine',
-                'width':700,
-                'height':600};
-
-            // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-        }
+       
     </script>
 </head>
 <body>
+
 <h1>Halo Dunia!  Hello World!  Halo Wereld!</h1>
 
-<div id="chart_div"></div> 
+ <form name="myform">
+                <div class="form-group">
+                    <label for="connect">WebSocket connection:</label>
+                    <input type="text" size="50" name="server" id="server" value="ws://127.0.0.1:2016/event-websocket"></input>
+                    <button id="connect" class="btn btn-default" onclick="showGreeting(); return false;">Connect</button>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                    </button>
+                </div>
+</form>
 
-<div id="greetings"></div>
+<div id="from_server"></div>
 </body>
 </html>
 
