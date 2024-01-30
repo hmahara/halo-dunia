@@ -9,4 +9,6 @@ docker build . -t halo-dunia:0.0.1 -t halo-dunia:latest
 
 docker run -p 2016:2016 hmahara/halo-dunia:latest
 
-docker run -e SPRING_RABBITMQ_HOST=atom.iamhelmi.eu -e SPRING_RABBITMQ_USERNAME=lincsafe -e 'SPRING_RABBITMQ_PASSWORD=start2024' hmahara/halo-dunia:0.
+### Run RabbitMq 
+
+docker run --name helmi-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
